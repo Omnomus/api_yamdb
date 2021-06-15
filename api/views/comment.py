@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny
 from ..models.comment import Comment
 from ..models.review import Review
 # from ..permissions import IsAuthorOrReadOnly
-from ..serializers import CommentSerializer
+from ..serializers.comment import CommentSerializer
 
 
 class CommentViewSet(viewsets.ModelViewSet):

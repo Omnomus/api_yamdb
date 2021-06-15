@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny
 from ..models.review import Review
 from ..models.title import Title
 # from ..permissions import IsAuthorOrReadOnly
-from ..serializers import ReviewSerializer
+from ..serializers.review import ReviewSerializer
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
