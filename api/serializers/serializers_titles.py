@@ -40,7 +40,7 @@ class TitlesSerializer(serializers.ModelSerializer):
 
     def update(self, title, validated_data):
         if 'name' not in self.initial_data:
-            raise ValidationError('При обновлении укажите имя')
+            raise ValidationError('When update name is required')
         if 'genre' in self.initial_data:
             slugs = validated_data.pop('genre')
             for slug in slugs:
@@ -48,7 +48,7 @@ class TitlesSerializer(serializers.ModelSerializer):
                     genre = Genres.objects.get(name=slug)
                 except Exception:
                     raise ValidationError(
-                        f'Указан несуществующий жанр - {slug}')
+                        f'No such genre - {slug}')
                 else:
                     TitlesGenres.objects.get_or_create(
                         genres=genre, titles=title)
