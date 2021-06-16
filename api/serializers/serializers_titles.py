@@ -39,6 +39,8 @@ class TitlesSerializer(serializers.ModelSerializer):
         return title
 
     def update(self, title, validated_data):
+        if 'name' not in self.initial_data:
+            raise ValidationError('При обновлении укажите имя')
         if 'genre' in self.initial_data:
             slugs = validated_data.pop('genre')
             for slug in slugs:
