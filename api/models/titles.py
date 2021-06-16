@@ -20,7 +20,9 @@ class Titles(models.Model):
     genre = models.ManyToManyField(
         Genres,
         through='TitlesGenres')
-    rating = models.DecimalField(max_digits=3, decimal_places=2)
+    rating = models.DecimalField(max_digits=2,
+                                 decimal_places=1,
+                                 null=True)
 
     class Meta:
         ordering = ('name',)
