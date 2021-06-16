@@ -27,7 +27,6 @@ router_v1.register(
 
 urlpatterns = [
     path('', include(router_v1.urls)),
-    path('v1/auth/', include('rest_framework.urls')),
     # path('v1/auth/email/', UserView.as_view(), name='confirmation'),
     path(
         'v1/auth/token/',
