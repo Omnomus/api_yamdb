@@ -1,8 +1,10 @@
+from django.db.models import Avg
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from api.models.categories import Categories
 from api.models.genres import Genres
+from api.models.review import Review
 from api.models.titles import Titles
 from api.models.titlesgenres import TitlesGenres
 from api.serializers.serializers_categories import CategoriesSerializer
@@ -21,7 +23,7 @@ class TitlesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Titles
         fields = (
-            'id', 'name', 'year', 'rating', 'description', 'genre', 'category')
+            'id', 'name', 'year', 'description', 'genre', 'category')
 
     def create(self, validated_data):
         if 'genre' not in self.initial_data:
@@ -67,6 +69,8 @@ class TitlesListSerializer(serializers.ModelSerializer):
             'id', 'name', 'year', 'rating', 'description', 'genre', 'category')
 
     def get_rating(self, title):
-        reviews = Review.objects.filter(title=title)
-        rating = reviews.aggregate(average_score=Avg('score'))
-        return round(rating['average_score'], 1)
+        # reviews = Review.objects.filter(title=title)
+        # rating = reviews.aggregate(average_score=Avg('score'))
+        # return round(rating['average_score'], 1)
+        rating = title.reviews.aggregate(Avg('score'))
+        return rating.get('score__avg')

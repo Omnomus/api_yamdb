@@ -4,6 +4,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from api.filters.filter_titles import TitlesFilter
 from api.models.titles import Titles
+from api.permissions_api.permissions_titles import IsAdminOrReadOnly
 from api.serializers.serializers_titles import TitlesSerializer
 from api.serializers.serializers_titles import TitlesListSerializer
 
