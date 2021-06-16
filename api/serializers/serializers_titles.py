@@ -10,7 +10,6 @@ from api.serializers.serializers_genres import GenresSerializer
 
 
 class TitlesSerializer(serializers.ModelSerializer):
-    rating = serializers.SerializerMethodField()
     genre = serializers.SlugRelatedField(
         slug_field='slug',
         queryset=Genres.objects.all(),
@@ -53,9 +52,6 @@ class TitlesSerializer(serializers.ModelSerializer):
                         genres=genre, titles=title)
         title = super().update(title, validated_data)
         return title
-
-    def get_rating(self, title):
-        pass
 
 
 class TitlesListSerializer(serializers.ModelSerializer):
