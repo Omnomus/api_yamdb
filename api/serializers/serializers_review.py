@@ -2,15 +2,15 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
 from api.models.review import Review
-from api.models.user import YaUser
 
 
 class ReviewSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
-        queryset=YaUser.objects.all(),
+        read_only=True,
         slug_field='username',
         default=serializers.CurrentUserDefault()
     )
+    title = serializers.SerializerMethodField()
 
     class Meta:
         fields = '__all__'
@@ -23,3 +23,6 @@ class ReviewSerializer(serializers.ModelSerializer):
                 message='Вы уже писали отзыв на это произведение.'
             )
         ]
+
+    def get_title(self):
+        return self.context['title']
