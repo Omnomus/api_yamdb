@@ -1,4 +1,4 @@
-from django.contrib.auth.models import (AbstractBaseUser,
+from django.contrib.auth.models import (AbstractUser,
                                         BaseUserManager)
 from django.db import models
 
@@ -13,45 +13,36 @@ USER_ROLE_CHOICES = (
 
 
 class YaUserManager(BaseUserManager):
-    def create_user(self, username, email, password=None):
+    """
+    Custom user model manager where email is the unique identifiers
+    for authentication instead of usernames.
+    """
+    def create_user(self, email, password, **extra_fields):
         """
-        Creates and saves a User with the given
-        username, email and password.
+        Create and save a YaUser with the given email and password.
         """
-        if not username:
-            raise ValueError('Users must have a username!')
         if not email:
             raise ValueError('Users must have an email address!')
-
-        user = self.model(
-            username=username,
-            email=self.normalize_email(email)
-        )
-
+        user = self.model(email=self.normalize_email(email), **extra_fields)
         user.set_password(password)
-        user.save(using=self._db)
+        user.save()
         return user
 
-    def create_superuser(self, username, email, password=None):
+    def create_superuser(self, email, password, **extra_fields):
         """
-        Creates and saves a superuser with the given
-        username, email and rassword.
+        Create and save a superuser with the given email and password.
         """
-        user = self.create_user(
-            username,
-            email,
-            password=password
-        )
+        user = self.create_user(email, password, **extra_fields)
         user.is_admin = True
-        user.save(using=self._db)
+        user.save()
         return user
 
 
-class YaUser(AbstractBaseUser):
-    """ Defines User model and its database fields."""
-    first_name = models.CharField('Имя', max_length=255, blank=True)
-    last_name = models.CharField('Фамилия', max_length=255, blank=True)
-    username = models.CharField('Username', max_length=255, unique=True)
+class YaUser(AbstractUser):
+    """ Defines YaUser model and its database fields."""
+    username = models.CharField(
+        'Username', max_length=255, blank=True, null=True, unique=True
+    )
     bio = models.TextField('О себе', max_length=1000, blank=True)
     email = models.EmailField(
         'Адрес электронной почты', max_length=255, unique=True
@@ -59,14 +50,14 @@ class YaUser(AbstractBaseUser):
     role = models.CharField(
         max_length=20, choices=USER_ROLE_CHOICES, default='user'
     )
-    is_active = models.BooleanField(default=True)
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
     objects = YaUserManager()
 
     class Meta:
+        ordering = ('email',)
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
