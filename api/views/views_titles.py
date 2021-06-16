@@ -1,13 +1,12 @@
-from django_filters.rest_framework import filters
-from django_filters.rest_framework import DjangoFilterBackend
+from django_filters.rest_framework import DjangoFilterBackend, filters
 from rest_framework import filters
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
 
 from api.filters.filter_titles import TitlesFilter
 from api.models.titles import Titles
-from api.serializers.serializers_titles import TitlesSerializer
-from api.serializers.serializers_titles import TitlesListSerializer
+from api.serializers.serializers_titles import (TitlesListSerializer,
+                                                TitlesSerializer)
 
 
 class TitlesViewSet(ModelViewSet):
