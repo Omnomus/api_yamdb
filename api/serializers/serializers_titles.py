@@ -1,4 +1,3 @@
-
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
@@ -13,7 +12,10 @@ from api.serializers.serializers_genres import GenresSerializer
 class TitlesSerializer(serializers.ModelSerializer):
     rating = serializers.SerializerMethodField()
     genre = serializers.SlugRelatedField(
-        slug_field='slug', queryset=Genres.objects.all(), many=True)
+        slug_field='slug',
+        queryset=Genres.objects.all(),
+        many=True,
+        required=False)
     category = serializers.SlugRelatedField(
         slug_field='slug', queryset=Categories.objects.all(), required=False)
 
@@ -67,4 +69,5 @@ class TitlesListSerializer(serializers.ModelSerializer):
             'id', 'name', 'year', 'rating', 'description', 'genre', 'category')
 
     def get_rating(self, title):
+        # return title.reviews.aggregate(Avg(score))
         pass
