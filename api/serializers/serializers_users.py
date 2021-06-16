@@ -23,3 +23,11 @@ class YaUserSerializer(ModelSerializer):
     #     except ValidationError:
     #         raise serializers.ValidationError('Given email is invalid')
     #     return email
+
+
+class YaUserMeSerializer(ModelSerializer):
+
+    class Meta:
+        model = YaUser
+        fields = ['first_name', 'last_name', 'username', 'bio', 'email', 'role']
+        
