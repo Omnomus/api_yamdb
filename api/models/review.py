@@ -29,6 +29,8 @@ class Review(models.Model):
             fields=['author', 'title'],
             name='unique_review'
         )
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
 
     def __str__(self):
         return (f'Отзыв {self.post.id} пользователя'

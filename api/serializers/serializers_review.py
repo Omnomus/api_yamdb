@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework.validators import UniqueTogetherValidator
 
 from api.models.review import Review
 
@@ -13,7 +12,7 @@ class ReviewSerializer(serializers.ModelSerializer):
     def validate(self, data):
         review = Review.objects.filter(title=self.context['title'],
                                        author=self.context['author'])
-        if review.exists():
+        if review.exists() and self.context['request.method'] == 'POST':
             raise serializers.ValidationError(
                 'Вы уже писали отзыв на это произведение.'
             )

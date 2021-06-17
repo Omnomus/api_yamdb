@@ -1,16 +1,16 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from api.models.comment import Comment
 from api.models.review import Review
-# from api.permissions import IsAuthorOrReadOnly
+from api.permissions.permissions_reviews_comments import IsAuthorOrStaff
 from api.serializers.serializers_comment import CommentSerializer
 
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrStaff]
 
     def get_queryset(self, *args, **kwargs):
         review_id = self.kwargs.get('review_id')

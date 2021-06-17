@@ -7,6 +7,10 @@ from api.models.review import Review
 from api.models.titles import Titles
 from api.models.user import YaUser
 
+from django.contrib import admin
+
+from api.registration.forms import YaUserCreationForm, YaUserChangeForm
+
 admin.site.site_header = 'YaMDb API'
 
 
@@ -18,8 +22,10 @@ class YaUserAdmin(admin.ModelAdmin):
     - search box on the admin change list page of the admin,
     - default display value for record’s fields that are empty.
     """
+    add_form = YaUserCreationForm
+    form = YaUserChangeForm
     list_display = ('username', 'email', 'role',)
-    search_fields = ('username',)
+    search_fields = ('email',)
 
 
 @admin.register(Comment)

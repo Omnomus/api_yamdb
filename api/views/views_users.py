@@ -1,7 +1,7 @@
 
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -12,10 +12,11 @@ from api.serializers.serializers_users import YaUserSerializer
 class YaUserViewSet(ModelViewSet):
     queryset = YaUser.objects.all()
     serializer_class = YaUserSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUser]
     lookup_field = 'username'
 
-    @action(detail=False, methods=['get', 'patch'])
+    @action(detail=False, methods=['get', 'patch'],
+            permission_classes=[IsAuthenticated])
     def me(self, request):
         user = self.request.user
         if request.method == 'GET':
