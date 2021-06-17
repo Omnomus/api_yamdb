@@ -7,7 +7,9 @@ from .genres import Genres
 
 
 class Titles(models.Model):
-    """Произведения."""
+    """
+    Model to represent all the titles.
+    """
     name = models.CharField('Название', max_length=250)
     year = models.PositiveSmallIntegerField(
         'Год создания', null=True, validators=[validate_year])

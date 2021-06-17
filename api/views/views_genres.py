@@ -15,6 +15,12 @@ class ListCreateDestroyViewSet(mixins.ListModelMixin,
 
 
 class GenresViewSet(ListCreateDestroyViewSet):
+    """
+    View to create, list and destroy genres. 
+
+    * List method is available for Anonymous,
+    others - for authenticated admin only.
+    """
     queryset = Genres.objects.all()
     serializer_class = GenresSerializer
     permission_classes = [IsAdminOrReadOnly]

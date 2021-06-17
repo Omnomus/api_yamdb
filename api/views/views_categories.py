@@ -15,6 +15,12 @@ class ListCreateDestroyViewSet(mixins.ListModelMixin,
 
 
 class CategoriesViewSet(ListCreateDestroyViewSet):
+    """
+    View to create, list and destroy categories. 
+
+    * List method is available for Anonymous,
+    others - for authenticated admin only.
+    """
     queryset = Categories.objects.all()
     serializer_class = CategoriesSerializer
     permission_classes = [IsAdminOrReadOnly]

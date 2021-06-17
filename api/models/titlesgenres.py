@@ -5,6 +5,9 @@ from .titles import Titles
 
 
 class TitlesGenres(models.Model):
+    """
+    Auxiliary model for relationship Titles-Genres (many-to-many).
+    """
     titles = models.ForeignKey(Titles, on_delete=models.CASCADE)
     genres = models.ForeignKey(Genres, on_delete=models.CASCADE)
 
