@@ -3,7 +3,9 @@ from django.db import models
 
 
 class Categories(models.Model):
-    """Категории произведений."""
+    """
+    Model to represent categories of titles.
+    """
     name = models.CharField('Название категории', max_length=200, unique=True)
     slug = AutoSlugField(
         populate_from='name',

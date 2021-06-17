@@ -3,8 +3,8 @@
 # import jwt
 # from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
+from django.utils.crypto import get_random_string
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 

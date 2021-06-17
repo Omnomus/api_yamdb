@@ -29,31 +29,19 @@ class TitlesSerializer(serializers.ModelSerializer):
         if 'genre' not in self.initial_data:
             title = Titles.objects.create(**validated_data)
         else:
-            slugs = validated_data.pop('genre')
+            genres_list = validated_data.pop('genre')
             title = Titles.objects.create(**validated_data)
-            for slug in slugs:
-                try:
-                    genre = Genres.objects.get(name=slug)
-                except Exception:
-                    pass
-                else:
-                    TitlesGenres.objects.create(genres=genre, titles=title)
+            for genre in genres_list:
+                TitlesGenres.objects.create(genres=genre, titles=title)
         return title
 
     def update(self, title, validated_data):
         if 'name' not in self.initial_data:
             raise ValidationError('When update name is required')
         if 'genre' in self.initial_data:
-            slugs = validated_data.pop('genre')
-            for slug in slugs:
-                try:
-                    genre = Genres.objects.get(name=slug)
-                except Exception:
-                    raise ValidationError(
-                        f'No such genre - {slug}')
-                else:
-                    TitlesGenres.objects.get_or_create(
-                        genres=genre, titles=title)
+            genres_list = validated_data.pop('genre')
+            for genre in genres_list:
+                TitlesGenres.objects.get_or_create(genres=genre, titles=title)
         title = super().update(title, validated_data)
         return title
 

@@ -3,7 +3,9 @@ from django.db import models
 
 
 class Genres(models.Model):
-    """Жанр произведения."""
+    """
+    Model to represent genres of titles.
+    """
     name = models.CharField('Название жанра', max_length=200, unique=True)
     slug = AutoSlugField(
         populate_from='name',

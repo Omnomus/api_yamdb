@@ -1,4 +1,3 @@
-# from django.contrib import admin
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import (TokenObtainPairView,
@@ -11,9 +10,6 @@ from api.views.views_genres import GenresViewSet
 from api.views.views_review import ReviewViewSet
 from api.views.views_titles import TitlesViewSet
 from api.views.views_users import YaUserViewSet
-
-# admin.site.register()
-# admin.autodiscover()
 
 router_v1 = DefaultRouter()
 
@@ -31,7 +27,10 @@ router_v1.register(
 
 urlpatterns = [
     path('', include(router_v1.urls)),
-    path('v1/auth/email/', RegisterView.as_view(), name='registration'),
+    path(
+        'v1/auth/email/',
+        RegisterView.as_view(),
+        name='registration'),
     path(
         'v1/auth/token/',
         TokenObtainPairView.as_view(),
