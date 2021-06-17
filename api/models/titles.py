@@ -8,7 +8,7 @@ from .genres import Genres
 
 class Titles(models.Model):
     """Произведения."""
-    name = models.CharField('Название', max_length=250, unique=True)
+    name = models.CharField('Название', max_length=250)
     year = models.PositiveSmallIntegerField(
         'Год создания', null=True, validators=[validate_year])
     description = models.TextField(default='Описание не добавлено')
