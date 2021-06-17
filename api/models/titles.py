@@ -1,8 +1,9 @@
 from django.db import models
 
-from .genres import Genres
-from .categories import Categories
 from api.validators.validate_year import validate_year
+
+from .categories import Categories
+from .genres import Genres
 
 
 class Titles(models.Model):

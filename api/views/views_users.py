@@ -1,10 +1,9 @@
-# from django.core.mail import send_mail
-from django.shortcuts import get_object_or_404
-from rest_framework.generics import RetrieveUpdateAPIView
-from rest_framework.viewsets import GenericViewSet, ModelViewSet
-from rest_framework.mixins import (RetrieveModelMixin,
-                                   UpdateModelMixin)
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
 from api.models.user import YaUser
 from api.serializers.serializers_users import YaUserSerializer
@@ -16,21 +15,20 @@ class YaUserViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     lookup_field = 'username'
 
-
-class RetrieveUpdateViewSet(RetrieveModelMixin,
-                            UpdateModelMixin,
-                            GenericViewSet):
-    pass
-
-
-class YaUserRetrieveUpdateViewSet(RetrieveUpdateViewSet):
-    queryset = YaUser.objects.all()
-    serializer_class = YaUserSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_object(self):
-        queryset = self.get_queryset()
-        # pk = self.request.query_params.get('id', None)
-        obj = get_object_or_404(queryset, id=self.request.user.id)
-        self.check_object_permissions(self.request, obj)
-        return obj
+    @action(detail=False, methods=['get', 'patch'])
+    def me(self, request):
+        user = self.request.user
+        if request.method == 'GET':
+            serializer = self.get_serializer(user)
+            return Response(serializer.data)
+        if request.method == 'PATCH':
+            serializer = self.get_serializer(
+                user, data=request.data, partial=True
+            )
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST
+            )
+        return Response(status=status.HTTP_403_FORBIDDEN)
