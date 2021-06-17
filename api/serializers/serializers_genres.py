@@ -7,4 +7,3 @@ class GenresSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genres
         fields = ('name', 'slug')
-        lookup_field = 'slug'

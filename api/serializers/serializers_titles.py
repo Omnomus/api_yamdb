@@ -12,16 +12,18 @@ from api.serializers.serializers_genres import GenresSerializer
 
 
 class TitlesSerializer(serializers.ModelSerializer):
-    rating = serializers.SerializerMethodField()
     genre = serializers.SlugRelatedField(
-        slug_field='slug', queryset=Genres.objects.all(), many=True)
+        slug_field='slug',
+        queryset=Genres.objects.all(),
+        many=True,
+        required=False)
     category = serializers.SlugRelatedField(
         slug_field='slug', queryset=Categories.objects.all(), required=False)
 
     class Meta:
         model = Titles
         fields = (
-            'id', 'name', 'year', 'rating', 'description', 'genre', 'category')
+            'id', 'name', 'year', 'description', 'genre', 'category')
 
     def create(self, validated_data):
         if 'genre' not in self.initial_data:
@@ -39,6 +41,8 @@ class TitlesSerializer(serializers.ModelSerializer):
         return title
 
     def update(self, title, validated_data):
+        if 'name' not in self.initial_data:
+            raise ValidationError('When update name is required')
         if 'genre' in self.initial_data:
             slugs = validated_data.pop('genre')
             for slug in slugs:
@@ -46,15 +50,12 @@ class TitlesSerializer(serializers.ModelSerializer):
                     genre = Genres.objects.get(name=slug)
                 except Exception:
                     raise ValidationError(
-                        f'Указан несуществующий жанр - {slug}')
+                        f'No such genre - {slug}')
                 else:
                     TitlesGenres.objects.get_or_create(
                         genres=genre, titles=title)
         title = super().update(title, validated_data)
         return title
-
-    def get_rating(self, title):
-        pass
 
 
 class TitlesListSerializer(serializers.ModelSerializer):
