@@ -32,7 +32,11 @@ class YaUserManager(BaseUserManager):
         Create and save a superuser with the given email and password.
         """
         user = self.create_user(email, password, **extra_fields)
+        user.is_staff = True
         user.is_admin = True
+        user.is_superuser = True
+        user.has_module_permission = True
+        user.role = 'admin'
         user.save()
         return user
 
@@ -61,4 +65,4 @@ class YaUser(AbstractUser):
         verbose_name_plural = 'Пользователи'
 
     def __str__(self):
-        return self.username
+        return str(self.email)
