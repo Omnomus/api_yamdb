@@ -21,5 +21,10 @@ class ReviewViewSet(viewsets.ModelViewSet):
         title_id = self.kwargs.get('title_id')
         title = get_object_or_404(Titles, id=title_id)
         context = super(ReviewViewSet, self).get_serializer_context()
-        context.update({'title': title})
+        context.update({'title': title, 'author': self.request.user})
         return context
+
+    def perform_create(self, serializer, *args, **kwargs):
+        title_id = self.kwargs.get('title_id')
+        title = get_object_or_404(Titles, id=title_id)
+        serializer.save(author=self.request.user, title=title)
