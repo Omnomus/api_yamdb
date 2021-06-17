@@ -1,15 +1,15 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from api.models.review import Review
 from api.models.titles import Titles
-# from api.permissions.permission_reviews_comments import IsAuthorOrStaff
+from api.permissions.permissions_reviews_comments import IsAuthorOrStaff
 from api.serializers.serializers_review import ReviewSerializer
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrStaff]
     serializer_class = ReviewSerializer
 
     def get_queryset(self, *args, **kwargs):
@@ -21,7 +21,9 @@ class ReviewViewSet(viewsets.ModelViewSet):
         title_id = self.kwargs.get('title_id')
         title = get_object_or_404(Titles, id=title_id)
         context = super(ReviewViewSet, self).get_serializer_context()
-        context.update({'title': title, 'author': self.request.user})
+        context.update({'title': title,
+                        'author': self.request.user,
+                        'request.method': self.request.method})
         return context
 
     def perform_create(self, serializer, *args, **kwargs):
