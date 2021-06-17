@@ -8,21 +8,18 @@ class ReviewSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         read_only=True,
         slug_field='username',
-        default=serializers.CurrentUserDefault()
     )
-    title = serializers.SerializerMethodField()
+
+    def validate(self, data):
+        review = Review.objects.filter(title=self.context['title'],
+                                       author=self.context['author'])
+        if review.exists():
+            raise serializers.ValidationError(
+                'Вы уже писали отзыв на это произведение.'
+            )
+        return data
 
     class Meta:
         fields = '__all__'
         read_only_fields = ('title',)
         model = Review
-        validators = [
-            UniqueTogetherValidator(
-                queryset=Review.objects.all(),
-                fields=['author', 'title'],
-                message='Вы уже писали отзыв на это произведение.'
-            )
-        ]
-
-    def get_title(self):
-        return self.context['title']
