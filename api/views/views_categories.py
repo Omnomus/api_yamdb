@@ -3,7 +3,7 @@ from rest_framework import filters, mixins
 from rest_framework.viewsets import GenericViewSet
 
 from api.models.categories import Categories
-from api.permissions.permissions_titles import IsAdminOrReadOnly
+from api.permissions.permissions import IsAuthAdmin, SafeMethods
 from api.serializers.serializers_categories import CategoriesSerializer
 
 
@@ -23,7 +23,7 @@ class CategoriesViewSet(ListCreateDestroyViewSet):
     """
     queryset = Categories.objects.all()
     serializer_class = CategoriesSerializer
-    permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [SafeMethods | IsAuthAdmin]
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']
     lookup_field = 'slug'

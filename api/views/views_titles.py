@@ -3,7 +3,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from api.filters.filter_titles import TitlesFilter
 from api.models.titles import Titles
-from api.permissions.permissions_titles import IsAdminOrReadOnly
+from api.permissions.permissions import SafeMethods, IsAuthAdmin
 from api.serializers.serializers_titles import (TitlesListSerializer,
                                                 TitlesSerializer)
 
@@ -16,7 +16,7 @@ class TitlesViewSet(ModelViewSet):
     others - for authenticated admin only.
     """
     queryset = Titles.objects.all()
-    permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [SafeMethods | IsAuthAdmin]
     filter_backends = [DjangoFilterBackend]
     filterset_class = TitlesFilter
 
