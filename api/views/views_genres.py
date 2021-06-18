@@ -3,7 +3,7 @@ from rest_framework import filters, mixins
 from rest_framework.viewsets import GenericViewSet
 
 from api.models.genres import Genres
-from api.permissions.permissions_titles import IsAdminOrReadOnly
+from api.permissions.permissions import SafeMethods, IsAuthAdmin
 from api.serializers.serializers_genres import GenresSerializer
 
 
@@ -23,7 +23,7 @@ class GenresViewSet(ListCreateDestroyViewSet):
     """
     queryset = Genres.objects.all()
     serializer_class = GenresSerializer
-    permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [SafeMethods | IsAuthAdmin]
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']
     lookup_field = 'slug'
