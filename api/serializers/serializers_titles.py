@@ -59,4 +59,7 @@ class TitlesListSerializer(serializers.ModelSerializer):
     def get_rating(self, title):
         reviews = Review.objects.filter(title=title)
         rating = reviews.aggregate(average_score=Avg('score'))
-        return rating['average_score']
+        rating = rating['average_score']
+        if rating is not None:
+            rating = round(rating, 1)
+        return rating
