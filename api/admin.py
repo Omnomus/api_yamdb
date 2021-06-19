@@ -6,10 +6,7 @@ from api.models.genres import Genres
 from api.models.review import Review
 from api.models.titles import Titles
 from api.models.user import YaUser
-
-from django.contrib import admin
-
-from api.registration.forms import YaUserCreationForm, YaUserChangeForm
+from api.registration.forms import YaUserChangeForm, YaUserCreationForm
 
 admin.site.site_header = 'YaMDb API'
 
