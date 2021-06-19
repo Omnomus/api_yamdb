@@ -24,7 +24,6 @@ class YaUserManager(BaseUserManager):
             raise ValueError('Users must have an email address!')
         user = self.model(email=self.normalize_email(email), **extra_fields)
         user.set_password(password)
-        user.is_verified = False
         user.save()
         return user
 
@@ -56,7 +55,6 @@ class YaUser(AbstractUser):
     )
     password = models.CharField(max_length=128, blank=True, null=True)
     confirmation_code = models.CharField(max_length=128, blank=True, null=True)
-    is_verified = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

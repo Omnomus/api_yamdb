@@ -1,8 +1,8 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
-from api.models.titles import Titles
 from api.authentication.models import YaUser
+from api.models.titles import Titles
 
 
 class Review(models.Model):

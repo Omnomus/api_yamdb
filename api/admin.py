@@ -1,12 +1,12 @@
 from django.contrib import admin
 
+from api.authentication.forms import YaUserChangeForm, YaUserCreationForm
+from api.authentication.models import YaUser
 from api.models.categories import Categories
 from api.models.comment import Comment
 from api.models.genres import Genres
 from api.models.review import Review
 from api.models.titles import Titles
-from api.authentication.models import YaUser
-from api.authentication.forms import YaUserChangeForm, YaUserCreationForm
 
 admin.site.site_header = 'YaMDb API'
 

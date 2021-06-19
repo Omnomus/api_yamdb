@@ -1,7 +1,7 @@
 from django.db import models
 
-from api.models.review import Review
 from api.authentication.models import YaUser
+from api.models.review import Review
 
 
 class Comment(models.Model):

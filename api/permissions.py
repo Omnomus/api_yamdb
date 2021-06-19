@@ -2,6 +2,9 @@ from rest_framework import permissions
 
 
 class IsAuthorOrStaff(permissions.BasePermission):
+    """
+    Allow access only to staff or instance author.
+    """
     def has_object_permission(self, request, view, obj):
         return (request.method in permissions.SAFE_METHODS
                 or request.user == obj.author
@@ -18,6 +21,9 @@ class IsAdminOrReadOnly(permissions.BasePermission):
 
 
 class IsOwner(permissions.BasePermission):
+    """
+    Allow access only to instance owner.
+    """
     def has_object_permission(self, request, view, obj):
         return (request.method in permissions.SAFE_METHODS
                 or request.user == obj.owner)
@@ -25,7 +31,7 @@ class IsOwner(permissions.BasePermission):
 
 class IsAdmin(permissions.BasePermission):
     """
-    Allows access only to users with 'admin' role.
+    Allow access only to users with 'admin' role.
     """
     def has_permission(self, request, view):
         return (request.auth and request.user.role == 'admin')

@@ -11,6 +11,8 @@ from api.serializers.serializers_comment import CommentSerializer
 class CommentViewSet(viewsets.ModelViewSet):
     """
     View to CRUD comments.
+    * Safe methods are available for Anonymous,
+    others - for comment's author or staff only.
     """
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrStaff]

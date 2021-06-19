@@ -21,7 +21,7 @@ CODE_ERROR = {
 
 
 def get_tokens_for_user(user):
-    """Create new refresh and access tokens for the given user."""
+    """Create new refresh and access tokens for given user."""
     refresh = RefreshToken.for_user(user)
 
     return {
