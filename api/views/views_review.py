@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from api.models.review import Review
 from api.models.titles import Titles
-from api.permissions.permissions_reviews_comments import IsAuthorOrStaff
+from api.permissions import IsAuthorOrStaff
 from api.serializers.serializers_review import ReviewSerializer
 
 
