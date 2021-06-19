@@ -1,12 +1,13 @@
 from django.contrib import admin
 
+from api.models.user import YaUser
 from api.authentication.forms import YaUserChangeForm, YaUserCreationForm
-from api.authentication.models import YaUser
 from api.models.categories import Categories
 from api.models.comment import Comment
 from api.models.genres import Genres
 from api.models.review import Review
 from api.models.titles import Titles
+from api.models.titlesgenres import TitlesGenres
 
 admin.site.site_header = 'YaMDb API'
 
@@ -56,4 +57,11 @@ class TitlesAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'year')
     search_fields = ('name',)
     list_filter = ('year',)
+    empty_value_display = '-пусто-'
+
+
+@admin.register(TitlesGenres)
+class TitleGenresAdmin(admin.ModelAdmin):
+    list_display = ('titles', 'genres',)
+    search_fields = ('titles',)
     empty_value_display = '-пусто-'

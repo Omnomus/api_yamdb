@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from api.authentication.models import YaUser
+from api.models.user import YaUser
 from api.permissions import IsAdmin
 from api.serializers.serializers_users import YaUserSerializer
 

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from api.authentication.models import YaUser
+from api.models.user import YaUser
 
 ROLE_ERROR = {
     'role': 'You can`t change this info'
