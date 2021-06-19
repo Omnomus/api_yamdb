@@ -5,20 +5,14 @@ from api.models.comment import Comment
 from api.models.genres import Genres
 from api.models.review import Review
 from api.models.titles import Titles
-from api.models.user import YaUser
-from api.registration.forms import YaUserChangeForm, YaUserCreationForm
+from api.authentication.models import YaUser
+from api.authentication.forms import YaUserChangeForm, YaUserCreationForm
 
 admin.site.site_header = 'YaMDb API'
 
 
 @admin.register(YaUser)
 class YaUserAdmin(admin.ModelAdmin):
-    """ А representation of a model Group in the admin interface.
-    It also defines the following custom values:
-    - fields displayed on the change list page of the admin,
-    - search box on the admin change list page of the admin,
-    - default display value for record’s fields that are empty.
-    """
     add_form = YaUserCreationForm
     form = YaUserChangeForm
     list_display = ('username', 'email', 'role',)

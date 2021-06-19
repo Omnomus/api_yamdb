@@ -4,11 +4,14 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from api.models.comment import Comment
 from api.models.review import Review
-from api.permissions.permissions_reviews_comments import IsAuthorOrStaff
+from api.permissions import IsAuthorOrStaff
 from api.serializers.serializers_comment import CommentSerializer
 
 
 class CommentViewSet(viewsets.ModelViewSet):
+    """
+    View to CRUD comments.
+    """
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrStaff]
 

@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from api.models.user import YaUser
+from api.authentication.models import YaUser
 
 USER_ERROR = {
     'error': 'User with given email already exists'

@@ -1,10 +1,13 @@
 from django.db import models
 
 from api.models.review import Review
-from api.models.user import YaUser
+from api.authentication.models import YaUser
 
 
 class Comment(models.Model):
+    """
+    Model to represent comments.
+    """
     review = models.ForeignKey(Review,
                                verbose_name='Отзыв',
                                on_delete=models.CASCADE,
