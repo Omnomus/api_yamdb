@@ -6,6 +6,9 @@ from api.models.user import YaUser
 
 
 class Review(models.Model):
+    """
+    Model to represent reviews.
+    """
     title = models.ForeignKey(Titles,
                               verbose_name='Произведение',
                               on_delete=models.CASCADE,

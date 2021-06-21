@@ -1,9 +1,7 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from rest_framework_simplejwt.views import (TokenObtainPairView,
-                                            TokenRefreshView)
 
-from api.registration.views import RegisterView
+from api.authentication.views import JWTTokenView, RegisterView
 from api.views.views_categories import CategoriesViewSet
 from api.views.views_comment import CommentViewSet
 from api.views.views_genres import GenresViewSet
@@ -33,12 +31,7 @@ urlpatterns = [
         name='registration'),
     path(
         'v1/auth/token/',
-        TokenObtainPairView.as_view(),
+        JWTTokenView.as_view(),
         name='token_obtain_pair'
-    ),
-    path(
-        'v1/auth/token/refresh/',
-        TokenRefreshView.as_view(),
-        name='token_refresh'
     )
 ]

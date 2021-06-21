@@ -5,6 +5,9 @@ from api.models.user import YaUser
 
 
 class Comment(models.Model):
+    """
+    Model to represent comments.
+    """
     review = models.ForeignKey(Review,
                                verbose_name='Отзыв',
                                on_delete=models.CASCADE,

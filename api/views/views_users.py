@@ -1,18 +1,25 @@
 
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from api.models.user import YaUser
+from api.permissions import IsAdmin
 from api.serializers.serializers_users import YaUserSerializer
 
 
 class YaUserViewSet(ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited
+    by users with 'admin' role only.
+    * 'users/me/' endpoint shows and updates info about current user and
+    is availiable for all authenticated.
+    """
     queryset = YaUser.objects.all()
     serializer_class = YaUserSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdmin]
     lookup_field = 'username'
 
     @action(detail=False, methods=['get', 'patch'],
