@@ -9,22 +9,26 @@ class Review(models.Model):
     title = models.ForeignKey(Titles,
                               verbose_name='Произведение',
                               on_delete=models.CASCADE,
-                              related_name="reviews")
+                              related_name='reviews')
     text = models.TextField(verbose_name='Текст отзыва')
     pub_date = models.DateTimeField(auto_now_add=True,
                                     verbose_name='Дата публикации')
     author = models.ForeignKey(YaUser,
                                verbose_name='Автор отзыва',
                                on_delete=models.CASCADE,
-                               related_name="reviews")
+                               related_name='reviews')
     score = models.PositiveSmallIntegerField(
         verbose_name='Оценка',
-        validators=[MinValueValidator(limit_value=1),
-                    MaxValueValidator(limit_value=10)]
+        validators=[
+            MinValueValidator(limit_value=1,
+                              message='Оценка не может быть меньше 1'),
+            MaxValueValidator(limit_value=10,
+                              message='Оценка не может быть больше 10')
+        ]
     )
 
     class Meta:
-        ordering = ("-pub_date",)
+        ordering = ('-pub_date',)
         models.UniqueConstraint(
             fields=['author', 'title'],
             name='unique_review'
