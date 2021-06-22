@@ -2,9 +2,9 @@ from django_filters.rest_framework import filters
 from rest_framework import filters, mixins
 from rest_framework.viewsets import GenericViewSet
 
-from api.models.genres import Genres
+from api.models.genre import Genre
 from api.permissions import IsAdminOrReadOnly
-from api.serializers.serializers_genres import GenresSerializer
+from api.serializers.serializers_genre import GenreSerializer
 
 
 class ListCreateDestroyViewSet(mixins.ListModelMixin,
@@ -14,15 +14,15 @@ class ListCreateDestroyViewSet(mixins.ListModelMixin,
     pass
 
 
-class GenresViewSet(ListCreateDestroyViewSet):
+class GenreViewSet(ListCreateDestroyViewSet):
     """
     View to create, list and destroy genres.
 
     * List method is available for Anonymous,
     others - for authenticated admin only.
     """
-    queryset = Genres.objects.all()
-    serializer_class = GenresSerializer
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
     permission_classes = [IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']

@@ -1,10 +1,10 @@
 from django.contrib import admin
 
-from api.models.categories import Categories
+from api.models.category import Category
 from api.models.comment import Comment
-from api.models.genres import Genres
+from api.models.genre import Genre
 from api.models.review import Review
-from api.models.titles import Titles
+from api.models.title import Title
 from api.models.user import YaUser
 from api.registration.forms import YaUserChangeForm, YaUserCreationForm
 
@@ -41,7 +41,7 @@ class ReviewAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
 
-@admin.register(Categories)
+@admin.register(Category)
 class CategoriesAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'slug')
     search_fields = ('name',)
@@ -49,7 +49,7 @@ class CategoriesAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
 
-@admin.register(Genres)
+@admin.register(Genre)
 class GenresAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'slug')
     search_fields = ('name',)
@@ -57,7 +57,7 @@ class GenresAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
 
-@admin.register(Titles)
+@admin.register(Title)
 class TitlesAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'year')
     search_fields = ('name',)
