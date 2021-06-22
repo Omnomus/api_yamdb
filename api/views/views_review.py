@@ -9,6 +9,11 @@ from api.serializers.serializers_review import ReviewSerializer
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
+    """
+    View to CRUD comments.
+    * Safe methods are available for Anonymous,
+    others - for comment's author or staff only.
+    """
     permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrStaff]
     serializer_class = ReviewSerializer
 

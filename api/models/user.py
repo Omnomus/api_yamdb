@@ -13,8 +13,8 @@ USER_ROLE_CHOICES = (
 
 class YaUserManager(BaseUserManager):
     """
-    Custom user model manager where email is the unique identifiers
-    for authentication instead of usernames.
+    Custom user model manager where email is the unique identifier
+    for authentication instead of username.
     """
     def create_user(self, email, password, **extra_fields):
         """
@@ -46,13 +46,15 @@ class YaUser(AbstractUser):
     username = models.CharField(
         'Username', max_length=255, blank=True, null=True, unique=True
     )
-    bio = models.TextField('О себе', max_length=1000, blank=True)
+    bio = models.TextField('About myself', max_length=1000, blank=True)
     email = models.EmailField(
-        'Адрес электронной почты', max_length=255, unique=True
+        'Email', max_length=255, unique=True
     )
     role = models.CharField(
         max_length=20, choices=USER_ROLE_CHOICES, default='user'
     )
+    password = models.CharField(max_length=128, blank=True, null=True)
+    confirmation_code = models.CharField(max_length=128, blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
