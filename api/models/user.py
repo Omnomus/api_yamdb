@@ -54,7 +54,6 @@ class YaUser(AbstractUser):
         max_length=20, choices=USER_ROLE_CHOICES, default='user'
     )
     password = models.CharField(max_length=128, blank=True, null=True)
-    confirmation_code = models.CharField(max_length=128, blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

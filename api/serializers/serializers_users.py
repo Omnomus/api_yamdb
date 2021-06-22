@@ -15,8 +15,9 @@ class YaUserSerializer(ModelSerializer):
 
     class Meta:
         model = YaUser
-        fields = ['first_name', 'last_name', 'username',
-                  'bio', 'email', 'role']
+        fields = [
+            'first_name', 'last_name', 'username', 'bio', 'email', 'role'
+        ]
         lookup_field = 'username'
 
     def validate(self, data):
