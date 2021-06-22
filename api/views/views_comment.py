@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from api.models.comment import Comment
 from api.models.review import Review
-from api.models.titles import Titles
+from api.models.title import Title
 from api.permissions import IsAuthorOrStaff
 from api.serializers.serializers_comment import CommentSerializer
 
@@ -21,7 +21,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     def get_queryset(self, *args, **kwargs):
         title_id = self.kwargs.get('title_id')
         review_id = self.kwargs.get('review_id')
-        title = get_object_or_404(Titles, id=title_id)
+        title = get_object_or_404(Title, id=title_id)
         review = get_object_or_404(Review, id=review_id, title=title)
         return Comment.objects.filter(review=review)
 

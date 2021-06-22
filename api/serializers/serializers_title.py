@@ -22,8 +22,7 @@ class TitleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Title
-        fields = (
-            'id', 'name', 'year', 'description', 'genre', 'category')
+        fields = '__all__'
 
     def create(self, validated_data):
         if 'genre' not in self.initial_data:
@@ -55,8 +54,7 @@ class TitleListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Title
-        fields = (
-            'id', 'name', 'year', 'rating', 'description', 'genre', 'category')
+        fields = '__all__'
 
     def get_rating(self, title):
         reviews = Review.objects.filter(title=title)
