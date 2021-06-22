@@ -2,7 +2,7 @@ from autoslug import AutoSlugField
 from django.db import models
 
 
-class Genres(models.Model):
+class Genre(models.Model):
     """
     Model to represent genres of titles.
     """
