@@ -3,8 +3,6 @@ from rest_framework import filters, mixins
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import GenericViewSet
 
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
-
 from api.models.category import Category
 from api.permissions import IsAdminOrReadOnly
 from api.serializers.serializers_category import CategorySerializer

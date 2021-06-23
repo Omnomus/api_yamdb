@@ -4,10 +4,10 @@ from rest_framework.serializers import ModelSerializer
 from api.models.user import YaUser
 
 ROLE_ERROR = {
-    'role': 'You can`t change this info'
+    'role': 'Вы не можете изменить свою роль'
 }
 EMAIL_ERROR = {
-    'email': 'You can`t change this info'
+    'email': 'Вы не можете изменить свой email'
 }
 
 
