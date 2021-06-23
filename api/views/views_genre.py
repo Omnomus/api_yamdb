@@ -1,5 +1,6 @@
 from django_filters.rest_framework import filters
 from rest_framework import filters, mixins
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import GenericViewSet
 
 from api.models.genre import Genre
@@ -23,7 +24,7 @@ class GenreViewSet(ListCreateDestroyViewSet):
     """
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
-    permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']
     lookup_field = 'slug'
