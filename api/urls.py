@@ -7,7 +7,7 @@ from api.views.views_comment import CommentViewSet
 from api.views.views_genre import GenreViewSet
 from api.views.views_review import ReviewViewSet
 from api.views.views_title import TitleViewSet
-from api.views.views_users import YaUserViewSet
+from api.views.views_user import YaUserViewSet
 
 router_v1 = DefaultRouter()
 

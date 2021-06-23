@@ -25,7 +25,7 @@ class YaUserSerializer(ModelSerializer):
         Check that user can`t change it's own role and email.
         """
         user = self.context['request'].user
-        if user.role != 'admin':
+        if not user.is_admin:
             if data.get('role'):
                 raise serializers.ValidationError(ROLE_ERROR)
             if data.get('email'):

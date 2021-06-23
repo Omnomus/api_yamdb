@@ -6,7 +6,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from api.models.user import YaUser
 from api.permissions import IsAdmin
-from api.serializers.serializers_users import YaUserSerializer
+from api.serializers.serializers_user import YaUserSerializer
 
 
 class YaUserViewSet(ModelViewSet):
@@ -35,4 +35,4 @@ class YaUserViewSet(ModelViewSet):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
-        # return Response(status=status.HTTP_403_FORBIDDEN)
+        return Response(status=status.HTTP_403_FORBIDDEN)

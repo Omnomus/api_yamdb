@@ -42,7 +42,9 @@ class RegisterView(APIView):
             return Response(
                 USER_ERROR, status=status.HTTP_400_BAD_REQUEST
             )
-        user = YaUser.objects.create_user(email=email, password=None)
+        user = YaUser.objects.create_user(
+            username=email, email=email, password=None
+        )
         confirmation_code = default_token_generator.make_token(user)
         send_mail(
             'Ваш код подтверждения',
