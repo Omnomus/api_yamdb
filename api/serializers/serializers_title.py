@@ -54,7 +54,8 @@ class TitleListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Title
-        fields = '__all__'
+        fields = (
+            'id', 'name', 'year', 'rating', 'description', 'genre', 'category')
 
     def get_rating(self, title):
         reviews = Review.objects.filter(title=title)
