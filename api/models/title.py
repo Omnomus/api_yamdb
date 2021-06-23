@@ -1,27 +1,31 @@
 from django.db import models
 
-from api.models.categories import Categories
-from api.models.genres import Genres
 from api.validators.validate_year import validate_year
 
+from .category import Category
+from .genre import Genre
 
-class Titles(models.Model):
+
+class Title(models.Model):
     """
     Model to represent all the titles.
     """
     name = models.CharField('Название', max_length=250)
     year = models.PositiveSmallIntegerField(
-        'Год создания', null=True, validators=[validate_year])
+        'Год создания',
+        null=True,
+        validators=[validate_year],
+        db_index=True)
     description = models.TextField(default='Описание не добавлено')
     category = models.ForeignKey(
-        Categories,
+        Category,
         on_delete=models.SET_NULL,
         null=True,
         related_name='titles',
         verbose_name='Категория произведения')
     genre = models.ManyToManyField(
-        Genres,
-        through='TitlesGenres')
+        Genre,
+        through='TitleGenre')
 
     class Meta:
         ordering = ('name',)

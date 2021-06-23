@@ -8,7 +8,7 @@ class IsAuthorOrStaff(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return (request.method in permissions.SAFE_METHODS
                 or request.user == obj.author
-                or request.user.role == ('moderator' or 'admin'))
+                or (request.user.is_moderator or request.user.is_admin))
 
 
 class IsAdminOrReadOnly(permissions.BasePermission):
@@ -17,16 +17,7 @@ class IsAdminOrReadOnly(permissions.BasePermission):
     """
     def has_permission(self, request, view):
         return (request.method in permissions.SAFE_METHODS
-                or (request.auth and request.user.role == 'admin'))
-
-
-class IsOwner(permissions.BasePermission):
-    """
-    Allow access only to instance owner.
-    """
-    def has_object_permission(self, request, view, obj):
-        return (request.method in permissions.SAFE_METHODS
-                or request.user == obj.owner)
+                or request.user.is_admin)
 
 
 class IsAdmin(permissions.BasePermission):
@@ -34,4 +25,4 @@ class IsAdmin(permissions.BasePermission):
     Allow access only to users with 'admin' role.
     """
     def has_permission(self, request, view):
-        return (request.auth and request.user.role == 'admin')
+        return request.user.is_admin

@@ -20,10 +20,10 @@ class Comment(models.Model):
                                     auto_now_add=True)
 
     class Meta:
-        ordering = ("-pub_date",)
+        ordering = ('-pub_date',)
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
 
     def __str__(self):
-        return (f"Коментарий пользователя {self.author} к отзыву"
-                f"{self.review.id}, создана {self.pub_date}")
+        return (f'Коментарий пользователя {self.author} к отзыву'
+                f'{self.review.id}, создана {self.pub_date}')

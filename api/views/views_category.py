@@ -1,10 +1,11 @@
 from django_filters.rest_framework import filters
 from rest_framework import filters, mixins
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import GenericViewSet
 
-from api.models.categories import Categories
+from api.models.category import Category
 from api.permissions import IsAdminOrReadOnly
-from api.serializers.serializers_categories import CategoriesSerializer
+from api.serializers.serializers_category import CategorySerializer
 
 
 class ListCreateDestroyViewSet(mixins.ListModelMixin,
@@ -14,16 +15,16 @@ class ListCreateDestroyViewSet(mixins.ListModelMixin,
     pass
 
 
-class CategoriesViewSet(ListCreateDestroyViewSet):
+class CategoryViewSet(ListCreateDestroyViewSet):
     """
     View to create, list and destroy categories.
 
     * List method is available for Anonymous,
     others - for authenticated admin only.
     """
-    queryset = Categories.objects.all()
-    serializer_class = CategoriesSerializer
-    permission_classes = [IsAdminOrReadOnly]
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly, IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']
     lookup_field = 'slug'

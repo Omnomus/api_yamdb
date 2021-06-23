@@ -4,10 +4,10 @@ from rest_framework.serializers import ModelSerializer
 from api.models.user import YaUser
 
 ROLE_ERROR = {
-    'role': 'You can`t change this info'
+    'role': 'Вы не можете изменить свою роль'
 }
 EMAIL_ERROR = {
-    'email': 'You can`t change this info'
+    'email': 'Вы не можете изменить свой email'
 }
 
 
@@ -15,8 +15,9 @@ class YaUserSerializer(ModelSerializer):
 
     class Meta:
         model = YaUser
-        fields = ['first_name', 'last_name', 'username',
-                  'bio', 'email', 'role']
+        fields = [
+            'first_name', 'last_name', 'username', 'bio', 'email', 'role'
+        ]
         lookup_field = 'username'
 
     def validate(self, data):
@@ -24,7 +25,7 @@ class YaUserSerializer(ModelSerializer):
         Check that user can`t change it's own role and email.
         """
         user = self.context['request'].user
-        if user.role != 'admin':
+        if not user.is_admin:
             if data.get('role'):
                 raise serializers.ValidationError(ROLE_ERROR)
             if data.get('email'):

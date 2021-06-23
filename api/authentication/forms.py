@@ -14,4 +14,4 @@ class YaUserChangeForm(UserChangeForm):
 
     class Meta:
         model = YaUser
-        fields = ('email',)
+        fields = ('email', 'role',)

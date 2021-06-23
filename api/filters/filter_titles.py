@@ -1,9 +1,9 @@
 import django_filters
 
-from api.models.titles import Titles
+from api.models.title import Title
 
 
-class TitlesFilter(django_filters.FilterSet):
+class TitleFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(
         field_name='name', lookup_expr='icontains')
     year = django_filters.NumberFilter(
@@ -14,5 +14,5 @@ class TitlesFilter(django_filters.FilterSet):
         field_name='category__slug', lookup_expr='iexact')
 
     class Meta:
-        model = Titles
+        model = Title
         fields = ('name', 'year', 'genre', 'category')
