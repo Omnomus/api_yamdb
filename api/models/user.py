@@ -45,4 +45,4 @@ class YaUser(AbstractUser):
         Return True if user.role is 'admin'
         or user is superuser.
         """
-        return self.is_staff or self.role == 'admin'
+        return self.is_superuser or self.role == 'admin'

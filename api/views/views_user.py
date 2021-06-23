@@ -18,7 +18,7 @@ class YaUserViewSet(ModelViewSet):
     """
     queryset = YaUser.objects.all()
     serializer_class = YaUserSerializer
-    permission_classes = [IsAdmin]
+    permission_classes = [IsAuthenticated, IsAdmin]
     lookup_field = 'username'
 
     @action(detail=False, methods=['get', 'patch'],

@@ -17,7 +17,7 @@ class IsAdminOrReadOnly(permissions.BasePermission):
     """
     def has_permission(self, request, view):
         return (request.method in permissions.SAFE_METHODS
-                or (request.auth and request.user.is_admin))
+                or request.user.is_admin)
 
 
 class IsOwner(permissions.BasePermission):
@@ -34,4 +34,4 @@ class IsAdmin(permissions.BasePermission):
     Allow access only to users with 'admin' role.
     """
     def has_permission(self, request, view):
-        return (request.auth and request.user.is_admin)
+        return request.user.is_admin
