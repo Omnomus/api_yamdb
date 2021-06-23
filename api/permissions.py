@@ -20,15 +20,6 @@ class IsAdminOrReadOnly(permissions.BasePermission):
                 or request.user.is_admin)
 
 
-class IsOwner(permissions.BasePermission):
-    """
-    Allow access only to instance owner.
-    """
-    def has_object_permission(self, request, view, obj):
-        return (request.method in permissions.SAFE_METHODS
-                or request.user == obj.owner)
-
-
 class IsAdmin(permissions.BasePermission):
     """
     Allow access only to users with 'admin' role.
