@@ -1,22 +1,23 @@
+from django.conf import settings
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
-from django.utils.crypto import get_random_string
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth.tokens import default_token_generator
 
 from api.models.user import YaUser
 
 USER_ERROR = {
-    'error': 'User with given email already exists'
+    'error': 'Пользователь с таким email уже существует!'
 }
 CODE_INFO = {
-    'email': 'The confirmation code was sent to your email'
+    'email': 'Код подтверждения отправлен на Ваш email!'
 }
 CODE_ERROR = {
-    'error': 'Invalid confirmation code'
+    'error': 'Неверный код подтверждения'
 }
 
 
@@ -41,13 +42,14 @@ class RegisterView(APIView):
             return Response(
                 USER_ERROR, status=status.HTTP_400_BAD_REQUEST
             )
-        user = YaUser.objects.create_user(email=email, password=None)
-        user.confirmation_code = get_random_string(length=11)
-        user.save()
+        user = YaUser.objects.create_user(
+            username=email, email=email, password=None
+        )
+        confirmation_code = default_token_generator.make_token(user)
         send_mail(
-            'Your confirmation code is here!',
-            user.confirmation_code,
-            'YaMDb@yamdb.com',
+            'Ваш код подтверждения',
+            confirmation_code,
+            settings.DEFAULT_FROM_EMAIL,
             (email,),
         )
         return Response(CODE_INFO, status=status.HTTP_200_OK)
@@ -61,7 +63,9 @@ class JWTTokenView(APIView):
         email = request.data['email']
         confirmation_code = request.data['confirmation_code']
         user = get_object_or_404(YaUser, email=email)
-        if user.confirmation_code != confirmation_code:
+        if not default_token_generator.check_token(
+            user, confirmation_code
+        ):
             return Response(
                 CODE_ERROR, status=status.HTTP_400_BAD_REQUEST
             )
